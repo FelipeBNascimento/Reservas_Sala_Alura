@@ -1,13 +1,13 @@
 package com.primeirodesafio.alura.primeiro_desafio.infrasctruture.entity;
 
+import com.primeirodesafio.alura.primeiro_desafio.infrasctruture.enums.StatusReserva;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 // Estou usando biblioteca lombok para facilitar as criações de getters setters e construtotes
 @Getter
@@ -27,7 +27,7 @@ public class ReservaEntity {
 
     // Criando uma coluna para data do inicio da reserva
     @Column (name = "data_inicio", nullable = false)
-    private LocalDate dataInicio;
+    private LocalDateTime dataInicio;
 
     // Passando a capacidade de pessoa que ira utilizar a sala
     @Column(name = "quantidade_pessoas")
@@ -35,7 +35,12 @@ public class ReservaEntity {
 
     //Criando uma coluna para data final da reserva
     @Column(name = "dataFim", nullable = false)
-    private LocalDate dataFinal;
+    private LocalDateTime dataFinal;
+
+
+    // Criando um enum para status
+    @Column(name="status")
+    private StatusReserva status = StatusReserva.VAZIA;
 
 
     //Craindo uma coluna para ver o id do usuario quando reserva a sala
