@@ -1,16 +1,14 @@
-package com.primeirodesafio.alura.primeiro_desafio.infrasctruture.entity;
+package com.primeirodesafio.alura.primeiro_desafio.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 // Estou usando biblioteca lombok para facilitar as criações de getters setters e construtotes
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 // Estou mostrando ao JPa/Hibernate que essa classe representa uma tabela no banco de dados
 @Entity
 //Definindo o nome da tabela
