@@ -1,6 +1,6 @@
-package com.primeirodesafio.alura.primeiro_desafio.infrasctruture.repository;
+package com.primeirodesafio.alura.primeiro_desafio.infrastructure.repository;
 
-import com.primeirodesafio.alura.primeiro_desafio.infrasctruture.entity.UsuarioEntity;
+import com.primeirodesafio.alura.primeiro_desafio.infrastructure.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 // e extend com a classe JpaRepository porque essa classe ja tem alguns metodos pré-definidos
 // para fazermos operações CRUD
 @Repository
-public interface UsuarioRepositoy extends JpaRepository<UsuarioEntity, Long> {
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 }

@@ -1,4 +1,4 @@
-package com.primeirodesafio.alura.primeiro_desafio.infrasctruture.exceptions;
+package com.primeirodesafio.alura.primeiro_desafio.infrastructure.exceptions;
 
 public class IdNaoEncontrado extends RuntimeException{
 
