@@ -11,6 +11,9 @@ import com.primeirodesafio.alura.primeiro_desafio.infrastructure.entity.SalaEnti
 import com.primeirodesafio.alura.primeiro_desafio.infrastructure.entity.UsuarioEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ConverterDtos {
 
@@ -78,8 +81,12 @@ public class ConverterDtos {
         return reservaConvertida;
 
     }
+
     // Criando um metodo para converter uma classe Reserva entity para  Reserva response
     public ReservaResponse paraReservaResponse(ReservaEntity reservaEntity) {
+
+        SalaResponse salaResponse = paraSalaResponse(reservaEntity.getSala());
+        UsuarioResponse usuarioResponse = paraUsuarioResponse(reservaEntity.getUsuario());
 
         ReservaResponse reservaConvertida = new ReservaResponse();
 
@@ -87,11 +94,64 @@ public class ConverterDtos {
         reservaConvertida.setDataFinal(reservaEntity.getDataFinal());
         reservaConvertida.setCapacidade_pessoas(reservaEntity.getCapacidade_pessoas());
         reservaConvertida.setStatus(reservaEntity.getStatus());
-        reservaConvertida.setUsuario(reservaEntity.getUsuario());
-        reservaConvertida.setSala(reservaEntity.getSala());
+        reservaConvertida.setUsuario(usuarioResponse);
+        reservaConvertida.setSala(salaResponse);
 
         return reservaConvertida;
 
     }
 
+
+    // Metodo para converter listas de entytis para responses
+    public List<SalaResponse> paraListasResponses(List<SalaEntity> salasEntiyes) {
+
+        // Cria uma lista vazia de salaResponse
+        List<SalaResponse> listasSalas = new ArrayList<>();
+
+        // faz um laço usando o for para adicionas cada sala e entity em uma lista response ja fazendo a conversão
+        //usando o metodo paraSalaResponse
+        for (SalaEntity sala : salasEntiyes) {
+            listasSalas.add(paraSalaResponse(sala));
+        }
+        // Retornando a lista
+        return listasSalas;
+
+    }
+
+    public SalaEntity atualizarSala ( SalaRequest salaRequest, SalaEntity salaEntity ){
+
+        SalaEntity sala = SalaEntity.builder()
+
+                .id(salaEntity.getId())
+                .capacidade(salaRequest.getCapacidade() != null ? salaRequest.getCapacidade() : salaEntity.getCapacidade())
+                .ativa(salaEntity.isAtiva())
+                .build();
+
+        return sala;
+    }
+
+    public UsuarioEntity atualizarUsuario (UsuarioRequest usuarioRequest, UsuarioEntity usuarioEntity){
+
+        UsuarioEntity usuario =  UsuarioEntity.builder()
+
+                .id(usuarioEntity.getId())
+                .nome(usuarioRequest.getNome() != null ? usuarioRequest.getNome() : usuarioEntity.getNome())
+                .email(usuarioRequest.getEmail()!= null ? usuarioRequest.getEmail() : usuarioEntity.getEmail())
+                .cpf(usuarioEntity.getCpf())
+                .build();
+
+        return usuario;
+    }
+
+    public List<ReservaResponse> listasDeReservasResponse (List<ReservaEntity> reservaEntityList){
+
+        List<ReservaResponse> listasReservas = new ArrayList<>();
+
+        for (ReservaEntity reserva : reservaEntityList){
+
+            listasReservas.add(paraReservaResponse(reserva));
+        }
+
+        return listasReservas;
+    }
 }

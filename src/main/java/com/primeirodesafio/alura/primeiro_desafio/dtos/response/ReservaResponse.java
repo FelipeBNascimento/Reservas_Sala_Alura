@@ -20,6 +20,6 @@ public class ReservaResponse {
     private LocalDateTime dataFinal;
     private Integer capacidade_pessoas;
     private StatusReserva status = StatusReserva.VAZIA;
-    private UsuarioEntity usuario;
-    private SalaEntity sala;
+    private UsuarioResponse usuario;
+    private SalaResponse sala;
 }

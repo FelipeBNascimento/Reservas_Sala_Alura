@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 // Estou mostrando ao JPa/Hibernate que essa interface é uma camada de persistencia
@@ -30,4 +31,6 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
             @Param("dataInicioNovareserva") LocalDateTime dataInicioNovareserva,
             @Param("dataFimNovaReserva") LocalDateTime dataFimNovaReserva
     );
+
+   List<ReservaEntity> findBySalaId(Long salaId);
 }

@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,13 +34,12 @@ public class ServiceReserva {
 
 
     @Transactional
+    // Metodo para fazer a reserva implementando as regras de negocio
     public ReservaResponse fazerReserva(ReservaRequest reservaRequest) {
-
 
         // Busquei a sala no banco de dados pelo id que tem na reserva
         SalaEntity salaNoBanco = salaRepository.findById(reservaRequest.getSalaId())
                 .orElseThrow(() -> new IdNaoEncontrado("Id não encontrado " + reservaRequest.getSalaId()));
-
 
         // Busquei o usuario no banco de dados pelo id que tem na reserva
         UsuarioEntity usuarioBanco = usuarioRepositoy.findById(reservaRequest.getUsuarioId())
@@ -73,20 +73,15 @@ public class ServiceReserva {
 
             throw new CapacidadeInsuficiente("Tem que ter ao menos 1 pessoa para reservar a sala");
         }
-
         // Adicionando o metodo verificar Horarios de sala
         verificConflitoDeHorarios(reservaEntity, reservaEntity.getDataInicio(), reservaEntity.getDataFinal());
-
 
         // depois de toda verificação informo quea sala esta ativa
         reservaEntity.setStatus(StatusReserva.ATIVA);
 
-
         // Convertendo a reserva entity para response e ja fazendo o retorno a sala reservada
         return converterDtos.paraReservaResponse(reservaRepository.save(reservaEntity));
-
     }
-
     // criando um metodo para validação das datas
     public void validarDatas(LocalDateTime datainicio, LocalDateTime dataFim) {
 
@@ -112,7 +107,6 @@ public class ServiceReserva {
         Optional<ReservaEntity> conflitoHorario = reservaRepository.findConflitoDeReserva(reserva.getSala().getId(),
                 dataInicio, dataFim);
 
-
         // Fazendo a regra de negocio caso esteja reservado gerar um excessão
         // informando que a sala ja está reservada
         if (conflitoHorario.isPresent()) {
@@ -121,6 +115,25 @@ public class ServiceReserva {
 
 
     }
+
+    // Criando metodo para visualizar as reservas pelo id
+    public List<ReservaResponse> visualizarListasPeloId (Long id){
+
+        List<ReservaEntity> reservas =  reservaRepository.findBySalaId(id);
+
+        List<ReservaResponse> listas = converterDtos.listasDeReservasResponse(reservas);
+        return listas;
+
+    }
+
+    // criando um metodo para apagar a reserva pelo id
+    public void apagarPeloId(Long id){
+
+        reservaRepository.deleteById(id);
+    }
+
+
+
 
 }
 

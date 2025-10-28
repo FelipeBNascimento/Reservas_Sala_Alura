@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 // Estou mostrando ao JPa/Hibernate que essa classe representa uma tabela no banco de dados
 @Entity
 //Definindo o nome da tabela

@@ -7,10 +7,9 @@ import com.primeirodesafio.alura.primeiro_desafio.dtos.request.UsuarioRequest;
 import com.primeirodesafio.alura.primeiro_desafio.dtos.response.ReservaResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,5 +26,13 @@ public class ReservaController {
     public ResponseEntity<ReservaResponse> criarReserva(@RequestBody ReservaRequest reservaRequest){
 
         return ResponseEntity.ok(serviceReserva.fazerReserva(reservaRequest));
+    }
+
+    //Criando metodo GET para visualizar a lista de reservas pelo id da sala
+
+    @GetMapping
+    public ResponseEntity<List<ReservaResponse>> visualizarListadeSalasreservada(@RequestParam Long id){
+
+        return ResponseEntity.ok(serviceReserva.visualizarListasPeloId(id));
     }
 }
